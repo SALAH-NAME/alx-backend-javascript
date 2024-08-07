@@ -1,8 +1,6 @@
 // 0-promise.js
 function getResponseFromAPI() {
-    return new Promise((resolve, reject) => {
-        resolve("API response data");
-    });
+    return new Promise();
 }
 
 export default getResponseFromAPI;
