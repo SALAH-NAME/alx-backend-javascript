@@ -1,13 +1,13 @@
 function taskBlock(trueOrFalse) {
-  const task = false;
+  const task1 = false;
   const task2 = true;
 
   if (trueOrFalse) {
-    const task = true;
+    const task1 = true;
     const task2 = false;
   }
 
-  return [task, task2];
+  return [task1, task2];
 }
 
 export default taskBlock;
