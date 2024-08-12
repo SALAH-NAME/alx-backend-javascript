@@ -1,7 +1,7 @@
-function getListStudentIds(arg) {
+function getListStudentIds(arr) {
   let newArr = [];
   if (arr instanceof Array) {
-    return arg.map((el) => el.id);
+    newArr = arr.map((el) => el.id);
   }
   return newArr;
 }
