@@ -1,29 +1,39 @@
 // 2-read_file.js
 const fs = require('fs');
 
-function countStudents(path) {
-	try {
-		const data = fs.readFileSync(path, 'utf8');
-		const lines = data.split('\n').filter(line => line.trim() !== '');
-		const students = lines.slice(1);
-
-		console.log(`Number of students: ${students.length}`);
-
-		const fields = {};
-		students.forEach(student => {
-			const [firstname, , , field] = student.split(',');
-			if (!fields[field]) {
-				fields[field] = [];
-			}
-			fields[field].push(firstname);
-		});
-
-		for (const [field, names] of Object.entries(fields)) {
-			console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
-		}
-	} catch (error) {
-		throw new Error('Cannot load the database');
-	}
+function countStudents(filePath) {
+  const studentGroups = {};
+  const fieldCounts = {};
+  let totalStudents = 0;
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const lines = fileContent.toString().split('\n');
+    for (let i = 0; i < lines.length; i += 1) {
+      if (lines[i]) {
+        totalStudents += 1;
+        const studentData = lines[i].toString().split(',');
+        if (Object.prototype.hasOwnProperty.call(studentGroups, studentData[3])) {
+          studentGroups[studentData[3]].push(studentData[0]);
+        } else {
+          studentGroups[studentData[3]] = [studentData[0]];
+        }
+        if (Object.prototype.hasOwnProperty.call(fieldCounts, studentData[3])) {
+          fieldCounts[studentData[3]] += 1;
+        } else {
+          fieldCounts[studentData[3]] = 1;
+        }
+      }
+    }
+    const studentCount = totalStudents - 1;
+    console.log(`Number of students: ${studentCount}`);
+    for (const [field, count] of Object.entries(fieldCounts)) {
+      if (field !== 'field') {
+        console.log(`Number of students in ${field}: ${count}. List: ${studentGroups[field].join(', ')}`);
+      }
+    }
+  } catch (error) {
+    throw Error('Cannot load the database');
+  }
 }
 
 module.exports = countStudents;
