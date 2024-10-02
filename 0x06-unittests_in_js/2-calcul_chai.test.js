@@ -1,86 +1,134 @@
 const { expect } = require('chai');
-const calculateNumber = require('./1-calcul');
+const calculateNumber = require('./2-calcul_chai');
 
-describe('#calculateNumber() with type SUM', () => {
-  it('should return 15 when adding 5 and 10', () => {
-    expect(calculateNumber('SUM', 5, 10)).to.equal(15);
-  });
-  it('should return 5 when adding 2 and 2.7', () => {
-    expect(calculateNumber('SUM', 2, 2.7)).to.equal(5);
-  });
-  it('should return 5 when adding 1.0 and 4.0', () => {
-    expect(calculateNumber('SUM', 1.0, 4.0)).to.equal(5);
-  });
-  it('should return 6 when adding 1.7 and 3.5', () => {
-    expect(calculateNumber('SUM', 1.7, 3.5)).to.equal(6);
-  });
-  it('should return 0 when adding 0.1 and 0.3', () => {
-    expect(calculateNumber('SUM', 0.1, 0.3)).to.equal(0);
-  });
-  it('should return 0 when adding -0.7 and 0.7', () => {
-    expect(calculateNumber('SUM', -0.7, 0.7)).to.equal(0);
-  });
-  it('should return -2 when adding -0.8 and -0.7', () => {
-    expect(calculateNumber('SUM', -0.8, -0.7)).to.equal(-2);
-  });
-});
+describe('calculateNumber', () => {
+  describe('type == "SUM"', () => {
+    it('should return 4 for equal positive numbers', () => {
+      expect(calculateNumber('SUM', 2.0, 2.0)).to.equal(4);
+    });
 
-describe('#calculateNumber() with type SUBTRACT', () => {
-  it('should return -2 when subtracting 1 and 3', () => {
-    expect(calculateNumber('SUBTRACT', 1, 3)).to.equal(-2);
-  });
-  it('should return -4 when subtracting 1.4 and 4.5', () => {
-    expect(calculateNumber('SUBTRACT', 1.4, 4.5)).to.equal(-4);
-  });
-  it('should return -3 when subtracting 1.2 and 3.7', () => {
-    expect(calculateNumber('SUBTRACT', 1.2, 3.7)).to.equal(-3);
-  });
-  it('should return -2 when subtracting 1.5 and 3.7', () => {
-    expect(calculateNumber('SUBTRACT', 1.5, 3.7)).to.equal(-2);
-  });
-  it('should return 0 when subtracting 0.1 and 0.3', () => {
-    expect(calculateNumber('SUBTRACT', 0.1, 0.3)).to.equal(0);
-  });
-  it('should return -2 when subtracting -0.7 and 0.7', () => {
-    expect(calculateNumber('SUBTRACT', -0.7, 0.7)).to.equal(-2);
-  });
-  it('should return 0 when subtracting -0.8 and -0.7', () => {
-    expect(calculateNumber('SUBTRACT', -0.8, -0.7)).to.equal(0);
-  });
-  it('should return 1 when subtracting 0.8 and -0.4', () => {
-    expect(calculateNumber('SUBTRACT', 0.8, -0.4)).to.equal(1);
-  });
-});
+    it('should return 4 for equal positive numbers (alternate)', () => {
+      expect(calculateNumber('SUM', 2.3, 1.8)).to.equal(4);
+    });
 
-describe('#calculateNumber() with type DIVIDE', () => {
-  it('should return 0.25 when dividing 1 and 4', () => {
-    expect(calculateNumber('DIVIDE', 1, 4)).to.equal(0.25);
+    it('should return -4 for equal negative numbers', () => {
+      expect(calculateNumber('SUM', -2.0, -2.0)).to.equal(-4);
+    });
+
+    it('should return -4 for equal negative numbers (alternate)', () => {
+      expect(calculateNumber('SUM', -2.3, -1.8)).to.equal(-4);
+    });
+
+    it('should return 0 for negative and positive numbers', () => {
+      expect(calculateNumber('SUM', -2.0, 2.0)).to.equal(0);
+    });
+
+    it('should return 0 for positive and negative numbers', () => {
+      expect(calculateNumber('SUM', 2.0, -2.0)).to.equal(0);
+    });
+
+    it('should return 0 for 0 and 0', () => {
+      expect(calculateNumber('SUM', 0.0, 0.0)).to.equal(0);
+    });
   });
-  it('should return 0.25 when dividing 1 and 3.7', () => {
-    expect(calculateNumber('DIVIDE', 1, 3.7)).to.equal(0.25);
+
+  describe('type == "SUBTRACT"', () => {
+    it('should return 0 for equal positive numbers', () => {
+      expect(calculateNumber('SUBTRACT', 2.0, 2.0)).to.equal(0);
+    });
+
+    it('should return 0 for equal positive numbers (alternate)', () => {
+      expect(calculateNumber('SUBTRACT', 2.3, 1.8)).to.equal(0);
+    });
+
+    it('should return 0 for equal negative numbers', () => {
+      expect(calculateNumber('SUBTRACT', -2.0, -2.0)).to.equal(0);
+    });
+
+    it('should return 0 for equal negative numbers (alternate)', () => {
+      expect(calculateNumber('SUBTRACT', -2.3, -1.8)).to.equal(0);
+    });
+
+    it('should return -4 for negative and positive numbers', () => {
+      expect(calculateNumber('SUBTRACT', -2.0, 2.0)).to.equal(-4.0);
+    });
+
+    it('should return 4 for positive and negative numbers', () => {
+      expect(calculateNumber('SUBTRACT', 2.0, -2.0)).to.equal(4.0);
+    });
+
+    it('should return 0 for 0 and 0', () => {
+      expect(calculateNumber('SUBTRACT', 0.0, 0.0)).to.equal(0);
+    });
   });
-  it('should return 0.2 when dividing 1.4 and 4.5', () => {
-    expect(calculateNumber('DIVIDE', 1.4, 4.5)). to.equal(0.2);
-  });
-  it('should return 1 when dividing 1.6 and 2.4', () => {
-    expect(calculateNumber('DIVIDE', 1.6, 2.4)).to.equal(1);
-  });
-  it('should return 2 when dividing 4.2 and 1.5', () => {
-    expect(calculateNumber('DIVIDE', 4.2, 1.5)).to.equal(2);
-  });
-  it('should return "Error" when dividing 1.3 and 0.3', () => {
-    expect(calculateNumber('DIVIDE', 1.3, 0.3)).to.equal('Error');
-  });
-  it('should return -1 when dividing -0.7 and 0.7', () => {
-    expect(calculateNumber('DIVIDE', -0.7, 0.7)).to.equal(-1);
-  });
-  it('should return 1 when dividing -0.8 and -0.7', () => {
-    expect(calculateNumber('DIVIDE', -0.8, -0.7)).to.equal(1);
-  });
-  it('should return -22 when dividing -44.5 and 2.4', () => {
-    expect(calculateNumber('DIVIDE', -44.5, 2.4)).to.equal(-22);
-  });
-  it('should return 22 when dividing -88.5 and -3.6', () => {
-    expect(calculateNumber('DIVIDE', -88.5, -3.6)).to.equal(22);
+
+  describe('type == "DIVIDE"', () => {
+    it('should return 4.0 for positive numbers', () => {
+      expect(calculateNumber('DIVIDE', 8.0, 2.0)).to.equal(4.0);
+    });
+
+    it('should return -3.5 for numbers with different signs', () => {
+      expect(calculateNumber('DIVIDE', -7.0, 2.0)).to.equal(-3.5);
+    });
+
+    it('should return -3.5 for numbers with different signs (alternate)', () => {
+      expect(calculateNumber('DIVIDE', 7.0, -2.0)).to.equal(-3.5);
+    });
+
+    it('should return 3.5 for negative numbers', () => {
+      expect(calculateNumber('DIVIDE', -7.0, -2.0)).to.equal(3.5);
+    });
+
+    it('should return 1 for equal positive numbers', () => {
+      expect(calculateNumber('DIVIDE', 2.0, 2.0)).to.equal(1);
+    });
+
+    it('should return 1 for equal negative numbers', () => {
+      expect(calculateNumber('DIVIDE', -2.0, -2.0)).to.equal(1);
+    });
+
+    it('should return 1 for equal rounded up numbers', () => {
+      expect(calculateNumber('DIVIDE', 2.6, 3.0)).to.equal(1);
+    });
+
+    it('should return 1 for equal rounded down numbers', () => {
+      expect(calculateNumber('DIVIDE', 2.4, 2.0)).to.equal(1);
+    });
+
+    it('should return 0 for 0 and positive number', () => {
+      expect(calculateNumber('DIVIDE', 0.0, 5.0)).to.equal(0);
+    });
+
+    it('should return -0 for 0 and negative number', () => {
+      expect(calculateNumber('DIVIDE', 0.0, -5.0)).to.equal(-0);
+    });
+
+    it('should return "Error" for positive number and 0', () => {
+      expect(calculateNumber('DIVIDE', 5.0, 0)).to.equal('Error');
+    });
+
+    it('should return "Error" for positive number and number rounded down to 0', () => {
+      expect(calculateNumber('DIVIDE', 5.0, 0.2)).to.equal('Error');
+    });
+
+    it('should return "Error" for positive number and number rounded up to 0', () => {
+      expect(calculateNumber('DIVIDE', 5.0, -0.2)).to.equal('Error');
+    });
+
+    it('should return "Error" for negative number and 0', () => {
+      expect(calculateNumber('DIVIDE', -5.0, 0)).to.equal('Error');
+    });
+
+    it('should return "Error" for negative number and number rounded down to zero', () => {
+      expect(calculateNumber('DIVIDE', -5.0, 0.2)).to.equal('Error');
+    });
+
+    it('should return "Error" for negative number and number rounded up to zero', () => {
+      expect(calculateNumber('DIVIDE', -5.0, -0.2)).to.equal('Error');
+    });
+
+    it('should return "Error" for 0 and 0', () => {
+      expect(calculateNumber('DIVIDE', 0.0, 0.0)).to.equal('Error');
+    });
   });
 });
